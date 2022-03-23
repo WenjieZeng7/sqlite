@@ -3,6 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 import matplotlib.dates as mdates
+from matplotlib.pyplot import MultipleLocator
+import seaborn as sns
+
 
 def readFronSqllite(db_path,exectCmd):
     conn = db.connect(db_path)  # 该 API 打开一个到 SQLite 数据库文件 database 的链接，如果数据库成功打开，则返回一个连接对象
@@ -21,7 +24,7 @@ def readfromAppaFrame(ARPAFrame):
     print(subARPA)
 
 if __name__=="__main__":
-    path = 'C://Users//420//Desktop//acc.db'
+    path = 'C://Users//420//Desktop//sss.db'
     time = readFronSqllite(path,"select time from Sensor1;")
     accelerateX = readFronSqllite(path,"select accelerateX from Sensor1;")
     accelerateY = readFronSqllite(path, "select accelerateY from Sensor1;")
@@ -29,6 +32,18 @@ if __name__=="__main__":
     angleX = readFronSqllite(path, "select angleX from Sensor1;")
     angleY = readFronSqllite(path, "select angleY from Sensor1;")
     angleZ = readFronSqllite(path, "select angleZ from Sensor1;")
+
+    # 横坐标为时间处理'%Y-%m-%d %H:%M:%S'
+    # print(time)
+    # print(accelerateX)
+    plt.plot(time,accelerateX)
+    x_major_locator = MultipleLocator(5) # 设置x轴的坐标显示间隔
+    ax = plt.gca()
+    ax.xaxis.set_major_locator(x_major_locator)  # 设置x轴的坐标显示间隔
+    plt.xticks(rotation=90,fontsize=3) # 坐标旋转，字体大小
+    plt.show()
+
+
 
     # 单独绘图
     # plt.figure()
@@ -38,23 +53,27 @@ if __name__=="__main__":
     # plt.savefig("angleZ.png", dpi=300)
 
     # accelerate组合绘图
-    plt.figure(figsize=(20, 5))
-    plt.title('accelerate')
-    plt.ylabel('m/s2')
-    plt.plot(accelerateX,color='green',linestyle='-')
-    plt.plot(accelerateY, color='blue', linestyle='-')
-    plt.plot(accelerateZ, color='red',linestyle='-')
-    plt.legend(["accelerateX", "accelerateY","accelerateZ"]) # 设置图例
-    plt.savefig("accelerate.png", dpi=300)
+    # plt.figure(figsize=(20, 5))
+    # plt.title('accelerate')
+    # plt.ylabel('m/s2')
+    # # x_major_locator = MultipleLocator(2)  # 设置x轴的坐标显示间隔
+    # # ax = plt.gca()
+    # # ax.xaxis.set_major_locator(x_major_locator)
+    # plt.xticks(rotation=90) # 坐标旋转
+    # plt.plot(time,accelerateX,color='green',linestyle='-')
+    # plt.plot(time,accelerateY, color='blue', linestyle='-')
+    # plt.plot(time,accelerateZ, color='red',linestyle='-')
+    # plt.legend(["accelerateX", "accelerateY","accelerateZ"]) # 设置图例
+    # plt.savefig("accelerate2222.png", dpi=300)
 
-    # angle组合绘图
-    plt.figure(figsize=(20, 5))
-    plt.title('angle')
-    plt.ylabel('rad/s')
-    plt.plot(angleX,color='green', label='angleX',linestyle='-')
-    plt.plot(angleY, color='blue', label='angleY', linestyle='-')
-    plt.plot(angleZ, color='red', label='angleZ', linestyle='-')
-    plt.legend(["angleX", "angleY", "angleZ"])
-    plt.savefig("angle.png", dpi=300)
+    # # angle组合绘图
+    # plt.figure(figsize=(20, 5))
+    # plt.title('angle')
+    # plt.ylabel('rad/s')
+    # plt.plot(angleX,color='green', label='angleX',linestyle='-')
+    # plt.plot(angleY, color='blue', label='angleY', linestyle='-')
+    # plt.plot(angleZ, color='red', label='angleZ', linestyle='-')
+    # plt.legend(["angleX", "angleY", "angleZ"])
+    # plt.savefig("angle.png", dpi=300)
 
 
